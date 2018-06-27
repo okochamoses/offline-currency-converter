@@ -41,3 +41,40 @@ const fetchCurrencies = () => {
 };
 
 fetchCurrencies();
+
+document
+  .getElementById("currencyConverterForm")
+  .addEventListener("submit", e => {
+    e.preventDefault();
+    const fromCurrency = document.getElementById("fromCurrency").value;
+    const toCurrency = document.getElementById("toCurrency").value;
+    const amount = document.getElementById("amount").value;
+    const query = `${fromCurrency}_${toCurrency}`;
+
+    // Add is-loading class to button
+    document.getElementById("submitButton").classList.add("is-loading");
+
+    fetch(
+      `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`
+    )
+      .then(response => response.json())
+      .then(res => {
+        const exchangeRate = Object.values(res)[0];
+        let convertedAmount = amount * exchangeRate;
+
+        convertedAmount = `${toCurrency} ${Number(
+          convertedAmount.toFixed(2)
+        ).toLocaleString()}`;
+
+        // Display converted amount in DOM
+        document.getElementById("showConversion").innerHTML = convertedAmount;
+
+        // Remove is-loading class
+        document.getElementById("submitButton").classList.remove("is-loading");
+      })
+      .catch(err => {
+        console.log(err);
+        // Remove is-loading class
+        document.getElementById("submitButton").classList.remove("is-loading");
+      });
+  });

@@ -21,8 +21,8 @@
       <nav class="navbar">
         <div class="container">
           <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-              Currency Converters
+            <a class="navbar-item has-text-white is-size-3" href="/">
+              <img src="./images/logo.png" alt="" height="100%">
             </a>
             <span class="navbar-burger burger" data-target="navbarMenu">
               <span></span>
@@ -50,18 +50,14 @@
         <h1 class="has-text-white is-size-3">
           Currency Converter ALC
         </h1>
-        <h2 class="has-text-white is-size-5">
-          Convert between any two currencies
-        </h2>
         <br>
-        <img src="images/logo.png" width="140px">
-        <br>
+        <img src="images/logo.png" width="100px">
         <br>
         <br>
         <form id="currencyConverterForm">
           <div class="columns">
             <div class="column is-6 is-offset-3">
-              <div class="select is-medium" id="from">
+              <div class="select" id="from">
                 <select name="from-currency" id="fromCurrency">
                 </select>
               </div>
@@ -72,7 +68,7 @@
             <div class="column is-4 is-offset-4">
               <div class="field">
                 <div class="control">
-                  <input class="input is-primary is-large" id="amount" type="text" placeholder="Amount">
+                  <input class="input is-primary is-medium" id="amount" type="number" placeholder="Amount">
                 </div>
               </div>
             </div>
@@ -88,14 +84,14 @@
           </div>
 
           <div class="columns">
-            <div class="column is-6 is-offset-3">
-              <button class="button is-danger is-large" type="submit">Convert</button>
+            <div class="column is-4 is-offset-4">
+              <button class="button is-danger is-large" id="submitButton" type="submit">Convert</button>
             </div>
           </div>
 
           <div class="columns">
-            <div class="column is-6 is-offset-3" id="showConversion">
-              <h1 class="is-size-2"></h1>
+            <div class="column is-6 is-offset-3">
+              <h1 class="is-size-2 has-text-white" id="showConversion"></h1>
             </div>
           </div>
         </form>
