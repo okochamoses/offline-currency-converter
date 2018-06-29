@@ -2,6 +2,12 @@
 //// APP LOGIC GOES HERE ////
 ////////////////////////////
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js").then(() => {
+    console.log("Service worker registered");
+  });
+}
+
 // Fetch all currencies
 const fetchCurrencies = () => {
   fetch("https://free.currencyconverterapi.com/api/v5/currencies")
@@ -42,6 +48,7 @@ const fetchCurrencies = () => {
 
 fetchCurrencies();
 
+// Convert currency from DOM
 document
   .getElementById("currencyConverterForm")
   .addEventListener("submit", e => {
