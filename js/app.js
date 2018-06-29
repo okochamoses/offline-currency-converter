@@ -48,7 +48,6 @@ const fetchCurrencies = () => {
 
 fetchCurrencies();
 
-// Convert currency from DOM
 document
   .getElementById("currencyConverterForm")
   .addEventListener("submit", e => {
