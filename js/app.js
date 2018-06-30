@@ -43,6 +43,7 @@ const fetchCurrencies = () => {
 
         return currencyObject;
       });
+      storeCurrencies(sortedCurrencies);
       return sortedCurrencies;
     })
     .catch(err => {
@@ -51,7 +52,7 @@ const fetchCurrencies = () => {
 };
 
 fetchCurrencies()
-  .then(currencies => populateOptions(currencies))
+  .then(currencies => populateCurrencyOptions(currencies))
   .catch(err => {
     console.log(err);
   });
