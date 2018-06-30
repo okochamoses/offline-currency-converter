@@ -8,9 +8,30 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+// Add currencies to option elements on DOM
+const populateCurrencyOptions = currencies => {
+  // Get elements from DOM
+  const fromCurrency = document.getElementById("fromCurrency");
+  const toCurrency = document.getElementById("toCurrency");
+
+  // Append currencies to Select elements on DOM
+  currencies.forEach(currency => {
+    const fromCurrencyOption = document.createElement("option");
+    const toCurrencyOption = document.createElement("option");
+    for (const item in currency) {
+      fromCurrencyOption.text = toCurrencyOption.text = `${item} (${
+        currency[item]
+      })`;
+      fromCurrencyOption.value = toCurrencyOption.value = item;
+    }
+    fromCurrency.appendChild(fromCurrencyOption);
+    toCurrency.appendChild(toCurrencyOption);
+  });
+};
+
 // Fetch all currencies
 const fetchCurrencies = () => {
-  fetch("https://free.currencyconverterapi.com/api/v5/currencies")
+  return fetch("https://free.currencyconverterapi.com/api/v5/currencies")
     .then(response => response.json())
     .then(currencies => {
       // Sort object keys alphabetically into an array
@@ -22,31 +43,18 @@ const fetchCurrencies = () => {
 
         return currencyObject;
       });
-
-      // Get elements from DOM
-      const fromCurrency = document.getElementById("fromCurrency");
-      const toCurrency = document.getElementById("toCurrency");
-
-      // Append currencies to Select elements on DOM
-      sortedCurrencies.forEach(currency => {
-        const fromCurrencyOption = document.createElement("option");
-        const toCurrencyOption = document.createElement("option");
-        for (const item in currency) {
-          fromCurrencyOption.text = toCurrencyOption.text = `${item} (${
-            currency[item]
-          })`;
-          fromCurrencyOption.value = toCurrencyOption.value = item;
-        }
-        fromCurrency.appendChild(fromCurrencyOption);
-        toCurrency.appendChild(toCurrencyOption);
-      });
+      return sortedCurrencies;
     })
     .catch(err => {
       console.log(err);
     });
 };
 
-fetchCurrencies();
+fetchCurrencies()
+  .then(currencies => populateOptions(currencies))
+  .catch(err => {
+    console.log(err);
+  });
 
 document
   .getElementById("currencyConverterForm")
