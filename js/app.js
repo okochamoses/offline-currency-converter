@@ -51,15 +51,6 @@ const fetchCurrencies = () => {
     });
 };
 
-fetchCurrencies()
-  .then(currencies => populateCurrencyOptions(currencies))
-  .catch(err => {
-    console.log("Fetching from database");
-    fetchCurrenciesIDB().then(currencies =>
-      populateCurrencyOptions(currencies)
-    );
-  });
-
 document
   .getElementById("currencyConverterForm")
   .addEventListener("submit", e => {
@@ -77,6 +68,7 @@ document
     )
       .then(response => response.json())
       .then(res => {
+        storeExchangeRates(res);
         const exchangeRate = Object.values(res)[0];
         let convertedAmount = amount * exchangeRate;
 
@@ -95,4 +87,13 @@ document
         // Remove is-loading class
         document.getElementById("submitButton").classList.remove("is-loading");
       });
+  });
+
+fetchCurrencies()
+  .then(currencies => populateCurrencyOptions(currencies))
+  .catch(err => {
+    console.log("Fetching from database");
+    fetchCurrenciesIDB().then(currencies =>
+      populateCurrencyOptions(currencies)
+    );
   });
