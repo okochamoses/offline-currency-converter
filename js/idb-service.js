@@ -15,3 +15,10 @@ const storeCurrencies = currencyArray => {
     })
     .catch(err => console.log(`Error saving to database: ${err}`));
 };
+
+const fetchCurrenciesIDB = () => {
+  return dbConnect.then(db => {
+    const currencies = db.transaction("currencies").objectStore("currencies");
+    return currencies.getAll().then(currencyArray => currencyArray);
+  });
+};
