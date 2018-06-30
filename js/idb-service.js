@@ -17,8 +17,10 @@ const storeCurrencies = currencyArray => {
 };
 
 const fetchCurrenciesIDB = () => {
-  return dbConnect.then(db => {
-    const currencies = db.transaction("currencies").objectStore("currencies");
-    return currencies.getAll().then(currencyArray => currencyArray);
-  });
+  return dbConnect
+    .then(db => {
+      const currencies = db.transaction("currencies").objectStore("currencies");
+      return currencies.getAll().then(currencyArray => currencyArray[0]);
+    })
+    .catch(err => console.log(err));
 };
