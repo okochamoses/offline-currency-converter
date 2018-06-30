@@ -52,10 +52,12 @@ const fetchCurrencies = () => {
 };
 
 fetchCurrencies()
-  .then(currencies => populateOptions(currencies))
+  .then(currencies => populateCurrencyOptions(currencies))
   .catch(err => {
     console.log("Fetching from database");
-    fetchCurrenciesIDB().then(currencies => populateOptions(currencies));
+    fetchCurrenciesIDB().then(currencies =>
+      populateCurrencyOptions(currencies)
+    );
   });
 
 document
