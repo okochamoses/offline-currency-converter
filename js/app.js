@@ -119,3 +119,5 @@ fetchCurrencies()
       populateCurrencyOptions(currencies)
     );
   });
+
+removeOldExchangeRates();

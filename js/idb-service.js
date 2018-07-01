@@ -63,3 +63,33 @@ const fetchExchangeRates = currencyPair => {
     })
     .catch(err => console.log(err));
 };
+
+const removeOldExchangeRates = () => {
+  return dbConnect.then(db => {
+    const rates = db.transaction("exchange-rates", "readwrite");
+    rates
+      .objectStore("exchange-rates")
+      .getAllKeys()
+      .then(keys => {
+        const oldExchangeRates = new Array();
+        for (const key of keys) {
+          rates
+            .objectStore("exchange-rates")
+            .get(key)
+            .then(currency => {
+              const createdAt = currency.time;
+              const oneHour = 3600 * 1000; // milliseconds in an hour
+              const maxExistTime = createdAt + oneHour;
+              const now = Date.now();
+
+              if (maxExistTime < now) {
+                return rates.objectStore("exchange-rates").delete(key);
+              }
+            })
+            .catch(err => console.log(err));
+        }
+        // oldExchangeRates;
+        oldExchangeRates.forEach(x => console.log(x));
+      });
+  });
+};
