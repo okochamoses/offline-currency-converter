@@ -70,6 +70,24 @@ const closeOfflineAlert = () => {
   document.getElementById("hero-head").innerHTML = "";
 };
 
+// UI responsiveness
+const resizeResponse = () => {
+  window.addEventListener("load", () => {
+    from = document.getElementById("from");
+    to = document.getElementById("to");
+    amount = document.getElementById("amount");
+    if (window.innerWidth < 500) {
+      from.classList.add("is-small");
+      to.classList.add("is-small");
+      amount.classList.add("is-small");
+    } else {
+      from.classList.remove("is-small");
+      to.classList.remove("is-small");
+      amount.classList.remove("is-small");
+    }
+  });
+};
+
 // Convert amount from one currency to another
 const convert = (exchangeRate, amount, toCurrency) => {
   if (!exchangeRate) {
@@ -144,3 +162,4 @@ fetchCurrencies()
   });
 
 removeOldExchangeRates();
+resizeResponse();

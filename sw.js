@@ -9,6 +9,11 @@ self.addEventListener("install", event => {
           "./js/idb.js",
           "./js/idb-service.js",
           "./images/logo.png",
+          "./images/favicon.ico",
+          "./styles/fonts/bariol.css",
+          "./styles/fonts/bariol_regular-webfont.woff",
+          "./styles/fonts/bariol_regular-webfont.woff2",
+          "./styles/style.css",
           "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
         ]);
       })
