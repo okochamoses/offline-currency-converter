@@ -59,9 +59,14 @@ const fetchExchangeRates = currencyPair => {
       const rates = db
         .transaction("exchange-rates")
         .objectStore("exchange-rates");
-      return rates.get(currencyPair).then(data => data.rate);
+      return rates.get(currencyPair).then(data => {
+        if (data === undefined) return;
+        return data.rate;
+      });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 const removeOldExchangeRates = () => {
@@ -88,7 +93,6 @@ const removeOldExchangeRates = () => {
             })
             .catch(err => console.log(err));
         }
-        // oldExchangeRates;
         oldExchangeRates.forEach(x => console.log(x));
       });
   });

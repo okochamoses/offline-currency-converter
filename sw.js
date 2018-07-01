@@ -6,8 +6,9 @@ self.addEventListener("install", event => {
         cache.addAll([
           "./index.html",
           "./js/app.js",
+          "./js/idb.js",
+          "./js/idb-service.js",
           "./images/logo.png",
-          "https://free.currencyconverterapi.com/api/v5/currencies",
           "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
         ]);
       })

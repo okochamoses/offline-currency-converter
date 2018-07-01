@@ -53,6 +53,9 @@ const fetchCurrencies = () => {
 
 // Convert amount from one currency to another
 const convert = (exchangeRate, amount, toCurrency) => {
+  if (!exchangeRate && navigator.onLine) {
+    return `<p>No connectivity</p>`;
+  }
   let convertedAmount = amount * exchangeRate;
   convertedAmount = `${toCurrency} ${Number(
     convertedAmount.toFixed(2)
