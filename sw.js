@@ -4,6 +4,7 @@ self.addEventListener("install", event => {
       .open("currency-converter-v1")
       .then(cache => {
         cache.addAll([
+          "/",
           "./index.html",
           "./js/app.js",
           "./js/idb.js",
