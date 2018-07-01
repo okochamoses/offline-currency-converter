@@ -51,6 +51,15 @@ const fetchCurrencies = () => {
     });
 };
 
+// Convert amount from one currency to another
+const convert = (exchangeRate, amount, toCurrency) => {
+  let convertedAmount = amount * exchangeRate;
+  convertedAmount = `${toCurrency} ${Number(
+    convertedAmount.toFixed(2)
+  ).toLocaleString()}`;
+  return convertedAmount;
+};
+
 document
   .getElementById("currencyConverterForm")
   .addEventListener("submit", e => {
@@ -71,13 +80,10 @@ document
         // Store exchange rate to indexedDB
         storeExchangeRates(res);
 
-        // Convert amount
         const exchangeRate = Object.values(res)[0];
-        let convertedAmount = amount * exchangeRate;
 
-        convertedAmount = `${toCurrency} ${Number(
-          convertedAmount.toFixed(2)
-        ).toLocaleString()}`;
+        // Convert amount
+        const convertedAmount = convert(exchangeRate, amount, toCurrency);
 
         // Display converted amount in DOM
         document.getElementById("showConversion").innerHTML = convertedAmount;
@@ -89,12 +95,7 @@ document
         console.log(err);
         fetchExchangeRates(query)
           .then(exchangeRate => {
-            let convertedAmount = amount * exchangeRate;
-
-            convertedAmount = `${toCurrency} ${Number(
-              convertedAmount.toFixed(2)
-            ).toLocaleString()}`;
-            return convertedAmount;
+            return convert(exchangeRate, amount, toCurrency);
           })
           .then(convertedAmount => {
             // Display converted amount in DOM
