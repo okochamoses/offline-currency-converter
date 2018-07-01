@@ -52,3 +52,14 @@ const storeExchangeRates = exchangeRate => {
     })
     .catch(err => console.log(`Error saving to database: ${err}`));
 };
+
+const fetchExchangeRates = currencyPair => {
+  return dbConnect
+    .then(db => {
+      const rates = db
+        .transaction("exchange-rates")
+        .objectStore("exchange-rates");
+      return rates.get(currencyPair).then(data => data.rate);
+    })
+    .catch(err => console.log(err));
+};

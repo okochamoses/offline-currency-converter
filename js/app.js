@@ -68,7 +68,10 @@ document
     )
       .then(response => response.json())
       .then(res => {
+        // Store exchange rate to indexedDB
         storeExchangeRates(res);
+
+        // Convert amount
         const exchangeRate = Object.values(res)[0];
         let convertedAmount = amount * exchangeRate;
 
@@ -84,8 +87,26 @@ document
       })
       .catch(err => {
         console.log(err);
-        // Remove is-loading class
-        document.getElementById("submitButton").classList.remove("is-loading");
+        fetchExchangeRates(query)
+          .then(exchangeRate => {
+            let convertedAmount = amount * exchangeRate;
+
+            convertedAmount = `${toCurrency} ${Number(
+              convertedAmount.toFixed(2)
+            ).toLocaleString()}`;
+            return convertedAmount;
+          })
+          .then(convertedAmount => {
+            // Display converted amount in DOM
+            document.getElementById(
+              "showConversion"
+            ).innerHTML = convertedAmount;
+
+            // Remove is-loading class
+            document
+              .getElementById("submitButton")
+              .classList.remove("is-loading");
+          });
       });
   });
 
