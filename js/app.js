@@ -51,10 +51,30 @@ const fetchCurrencies = () => {
     });
 };
 
+// Alert when network is offline
+const offlineAlert = () => {
+  document.getElementById(
+    "hero-head"
+  ).innerHTML = `<div class="notification is-danger">
+    <button class="delete" id="close-alert"></button>
+    You are currenctly offline. You will not be able to convert any currency you haven't converted in the last hour.
+  </div>`;
+
+  document
+    .getElementById("close-alert")
+    .addEventListener("click", () => closeOfflineAlert());
+};
+
+// Close offline alert
+const closeOfflineAlert = () => {
+  document.getElementById("hero-head").innerHTML = "";
+};
+
 // Convert amount from one currency to another
 const convert = (exchangeRate, amount, toCurrency) => {
-  if (!exchangeRate && navigator.onLine) {
-    return `<p>No connectivity</p>`;
+  if (!exchangeRate) {
+    offlineAlert();
+    return `No connectivity!`;
   }
   let convertedAmount = amount * exchangeRate;
   convertedAmount = `${toCurrency} ${Number(
